@@ -23,9 +23,9 @@ def main_menu(message):
 #### Начало с кнопки Старт
 @bot.message_handler(commands=['start'])
 def start(message):
-    markup = types.ReplyKeyboardMarkup()
-    btn_1 = types.KeyboardButton('Приход')
-    btn_2 = types.KeyboardButton('Расход')
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn_1 = types.KeyboardButton('💰 Приход')
+    btn_2 = types.KeyboardButton('😫 Расход')
     markup.row(btn_1, btn_2)
     bot.send_message(message.chat.id, 'Выбери категорию', reply_markup=markup)
 
@@ -154,9 +154,9 @@ def show_stats(message):
     main_menu(message)
 
 #### Выбор источника прихода
-@bot.message_handler(func=lambda message: message.text == 'Приход')
+@bot.message_handler(func=lambda message: message.text == '💰 Приход')
 def income_source(message):
-    markup = types.ReplyKeyboardMarkup()
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn_1 = types.KeyboardButton('Соколов')
     btn_2 = types.KeyboardButton('Академ')
     markup.row(btn_1, btn_2)
@@ -176,7 +176,7 @@ def income_source(message):
     bot.send_message(message.chat.id, 'Выбери что именно пришло', reply_markup=markup)
 
 #### Выбор источника расходов
-@bot.message_handler(func=lambda message: message.text == 'Расход')
+@bot.message_handler(func=lambda message: message.text == '😫 Расход')
 def costs_source(message):
     markup = types.ReplyKeyboardMarkup()
     btn_1 = types.KeyboardButton('Квартира')
@@ -216,6 +216,7 @@ def sum_income(message):
     source = message.text
     bot.send_message(message.chat.id, 'Введи сумму прихода', reply_markup=None)
 
+
 #### Введдение суммы расхода или прихода
 @bot.message_handler(func=lambda message: message.text in ['Квартира', 'Кредит','Аптека','ВкусМил','Продукты','Быт','Кафе и фастфуд','Коммуналка и интернет',
                                                             'Такси и самокаты', 'Транспорт', 'Стоматолог', 'Красота', 'Прочее', 'Доставка', 'Отложить 20%', 'Психолог','WildBerries','Самокат'])
@@ -242,12 +243,14 @@ def save_to_database(date, type, source, amount):
     cur.close()
     conn.close()
 
+
 @bot.message_handler(func=lambda message: message.text.isdigit())
 def save_amount(message):
     amount = message.text
     current_date = datetime.now()
     save_to_database(current_date, type, source, amount)
     bot.send_message(message.chat.id, 'Сумма успешно сохранена!')
+    
     main_menu(message)
 
 
