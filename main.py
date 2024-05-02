@@ -153,8 +153,6 @@ def show_stats(message):
     conn.close()
     main_menu(message)
 
-
-
 #### Выбор источника прихода
 @bot.message_handler(func=lambda message: message.text == 'Приход')
 def income_source(message):
