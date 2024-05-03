@@ -1,4 +1,4 @@
-TOKEN = '2096136409:AAHHocYtwJ-6DsBEHE7x37IykWwhvE4byoE'
+TOKEN = ''
 
 dbname = 'postgres'
 user = 'petpro'
